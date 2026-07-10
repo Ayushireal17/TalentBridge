@@ -1,0 +1,8 @@
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+*.lock
+/.idea
+/.vscode
