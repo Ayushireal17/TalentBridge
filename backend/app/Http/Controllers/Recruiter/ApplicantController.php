@@ -64,6 +64,87 @@ class ApplicantController extends Controller
         ]]);
     }
 
+    public function analytics(Request $request): JsonResponse
+    {
+        $recruiter = $request->user()->recruiter;
+        if (!$recruiter) {
+            return response()->json(["success" => false, "message" => "Not a recruiter."], 403);
+        }
+        
+        $jobIds = $recruiter->jobs()->pluck("id");
+        
+        // Stats
+        $totalJobs = $recruiter->jobs()->count();
+        $activeJobs = $recruiter->activeJobs()->count();
+        $totalApplications = Application::whereIn("job_id", $jobIds)->count();
+        $averageMatchScore = round(Application::whereIn("job_id", $jobIds)->whereNotNull("match_score")->avg("match_score") ?? 0);
+        
+        // Applications by status
+        $statusCounts = Application::whereIn("job_id", $jobIds)
+            ->selectRaw("status, count(*) as count")
+            ->groupBy("status")
+            ->pluck("count", "status")
+            ->toArray();
+            
+        // Make sure all statuses are represented
+        $applicationsByStatus = [];
+        foreach (Application::STATUSES as $status) {
+            $applicationsByStatus[$status] = $statusCounts[$status] ?? 0;
+        }
+        
+        // Applications by job
+        $applicationsByJob = $recruiter->jobs()
+            ->withCount("applications")
+            ->orderByDesc("applications_count")
+            ->take(5)
+            ->get()
+            ->map(fn($job) => [
+                "id" => $job->id,
+                "title" => $job->title,
+                "applications_count" => $job->applications_count
+            ]);
+
+        // Match score segments
+        $highFit = Application::whereIn("job_id", $jobIds)->where("match_score", ">=", 80)->count();
+        $medFit = Application::whereIn("job_id", $jobIds)->whereBetween("match_score", [50, 79])->count();
+        $lowFit = Application::whereIn("job_id", $jobIds)->where("match_score", "<", 50)->whereNotNull("match_score")->count();
+        $unranked = Application::whereIn("job_id", $jobIds)->whereNull("match_score")->count();
+            
+        // Daily trends for the last 14 days
+        $trends = Application::whereIn("job_id", $jobIds)
+            ->where("applied_at", ">=", now()->subDays(14))
+            ->selectRaw("DATE(applied_at) as date, count(*) as count")
+            ->groupBy("date")
+            ->orderBy("date")
+            ->pluck("count", "date")
+            ->toArray();
+            
+        $dailyTrends = [];
+        for ($i = 13; $i >= 0; $i--) {
+            $date = now()->subDays($i)->format("Y-m-d");
+            $dailyTrends[] = [
+                "date" => now()->subDays($i)->format("M d"),
+                "count" => $trends[$date] ?? 0
+            ];
+        }
+        
+        return response()->json(["success" => true, "data" => [
+            "total_jobs" => $totalJobs,
+            "active_jobs" => $activeJobs,
+            "total_applications" => $totalApplications,
+            "average_match_score" => $averageMatchScore,
+            "applications_by_status" => $applicationsByStatus,
+            "applications_by_job" => $applicationsByJob,
+            "match_score_segments" => [
+                "high" => $highFit,
+                "medium" => $medFit,
+                "low" => $lowFit,
+                "unranked" => $unranked,
+            ],
+            "daily_trends" => $dailyTrends,
+        ]]);
+    }
+
     private function auth(Request $request, Job $job): void
     {
         if ($job->recruiter_id !== $request->user()->recruiter?->id) abort(403);

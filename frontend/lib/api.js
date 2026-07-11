@@ -82,6 +82,7 @@ export const recruiterAPI = {
   rankCandidates: (jobId)      => api.post(`/recruiter/jobs/${jobId}/rank-candidates`),
   updateStatus:   (jobId, appId, status, note) => api.put(`/recruiter/jobs/${jobId}/applicants/${appId}/status`, { status, recruiter_note: note }),
   dashboard:      ()           => api.get("/recruiter/dashboard"),
+  analytics:      ()           => api.get("/recruiter/analytics"),
 };
 
 export const aiAPI = {

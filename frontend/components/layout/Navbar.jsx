@@ -36,12 +36,13 @@ export default function Navbar() {
   ];
 
   const candidateLinks = [
-    { label: "Dashboard",    href: "/candidate/dashboard" },
-    { label: "Find Jobs",    href: "/candidate/jobs" },
-    { label: "Resumes",      href: "/candidate/resumes" },
-    { label: "Applications", href: "/candidate/applications" },
-    { label: "Interview",    href: "/candidate/interview" },
-  ];
+  { label: "Dashboard",    href: "/candidate/dashboard" },
+  { label: "Find Jobs",    href: "/candidate/jobs" },
+  { label: "Resumes",      href: "/candidate/resumes" },
+  { label: "Builder",      href: "/candidate/builder" },
+  { label: "Applications", href: "/candidate/applications" },
+  { label: "Interview",    href: "/candidate/interview" },
+];
 
   const activeLinks =
     user?.role === "admin"     ? adminLinks :

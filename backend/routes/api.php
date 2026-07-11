@@ -98,6 +98,7 @@ Route::prefix("v1")->group(function () {
         // ── Recruiter ─────────────────────────────────────────────────────────
         Route::middleware("role:recruiter")->prefix("recruiter")->group(function () {
             Route::get("dashboard",      [ApplicantController::class, "dashboard"]);
+            Route::get("analytics",      [ApplicantController::class, "analytics"]);
             Route::apiResource("jobs",   JobController::class);
             Route::post("jobs/{job}/toggle-active",    [JobController::class, "toggleActive"]);
             Route::get("jobs/{job}/applicants",        [ApplicantController::class, "index"]);
