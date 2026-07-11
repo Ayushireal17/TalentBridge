@@ -228,14 +228,6 @@ MAIL_ENCRYPTION=tls
 
 ---
 
-> Replace these placeholders with actual screenshots.
-
-| Home | Dashboard |
-|------|-----------|
-| ![](docs/home.png) | ![](docs/dashboard.png) |
-
----
-
 # 🛣️ Roadmap
 
 - [x] Authentication System
