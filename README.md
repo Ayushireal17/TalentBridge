@@ -1,122 +1,271 @@
-# TalentBridge — AI-Powered Career Platform
+# 🌉 TalentBridge AI-Powered Career Platform
 
-> Minimal · Playful · 3D · Interactive · Animated  
-> Web3 / Technology / Startup design category
+> **An intelligent recruitment platform that connects candidates and recruiters through AI-powered career assistance, resume analysis, job matching, and hiring workflows.**
 
----
-
-## Tech Stack
-| Layer     | Technology |
-|-----------|-----------|
-| Frontend  | Next.js 14 App Router · React · Tailwind CSS · Bootstrap 5 · Three.js · Framer Motion |
-| Backend   | Laravel 12 · PHP 8.2 · Sanctum Auth |
-| AI        | Google Gemini 1.5 Flash |
-| Email     | PHPMailer (SMTP / Gmail) |
-| Database  | MySQL 8.x (port 3306) · XAMPP |
+<p align="center">
+  Built with <b>Next.js</b>, <b>Laravel</b>, <b>Google Gemini AI</b>, <b>Three.js</b>, and <b>MySQL</b>.
+</p>
 
 ---
 
-## Features
-- 🔐 Role-based auth — Candidate / Recruiter / Admin (separate login)
-- 🤖 BridgeAI Chatbot — career guidance powered by Gemini
-- 📄 PDF + Image resume parser — instant AI summary & ATS score
-- 🎯 AI job matching — % score per job
-- ✉️  Cover letter generator — one click, any tone
-- 🎤 Interview prep — AI questions + evaluation
-- 💼 Recruiter tools — post jobs, rank candidates with AI
-- 🏗️  Resume builder with PDF export
-- 📧 Transactional emails via PHPMailer
+# ✨ Overview
+
+TalentBridge is an AI-powered recruitment platform designed to simplify the hiring journey for both candidates and recruiters.
+
+Candidates can build professional resumes, analyze ATS compatibility, prepare for interviews, generate AI-powered cover letters, and discover jobs tailored to their skills.
+
+Recruiters can post job openings, manage applicants, and leverage AI to identify the most suitable candidates efficiently.
 
 ---
 
-## Quick Start
+# 🚀 Tech Stack
 
-### 1 — Database
-Open phpMyAdmin → create database: **talentbridge**
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | Next.js 14 • React • Tailwind CSS • Bootstrap 5 • Three.js • Framer Motion |
+| **Backend** | Laravel 12 • PHP 8.2 • Laravel Sanctum |
+| **AI** | Google Gemini 1.5 Flash |
+| **Database** | MySQL 8.x |
+| **Email** | PHPMailer (SMTP / Gmail) |
+| **Development** | XAMPP • Composer • npm |
 
-### 2 — Backend
+---
+
+# ✨ Features
+
+## 👨‍💼 Candidate
+
+- 🤖 AI Career Assistant (BridgeAI)
+- 📄 Resume Builder with PDF Export
+- 📊 AI Resume Analysis & ATS Score
+- 🎯 Smart AI Job Matching
+- ✉️ AI Cover Letter Generator
+- 🎤 AI Interview Preparation
+- 💾 Save Jobs
+- 📨 Apply for Jobs
+- 👤 Profile Management
+
+---
+
+## 🏢 Recruiter
+
+- 📢 Create & Manage Job Listings
+- 🤖 AI Candidate Ranking
+- 📂 Applicant Management
+- 📄 Resume Review
+- 📈 Recruiter Dashboard
+
+---
+
+## 🛡️ Admin
+
+- 👥 User Management
+- 💼 Job Management
+- 📊 Analytics Dashboard
+- ⚙️ Platform Monitoring
+
+---
+
+## 🧠 AI Modules
+
+- Resume Parser (PDF & Image)
+- ATS Compatibility Analysis
+- Personalized Job Recommendations
+- AI Career Chatbot
+- AI Cover Letter Generation
+- AI Interview Question Generation
+- AI Candidate Ranking
+
+---
+
+# 📁 Project Structure
+
+```text
+TalentBridge/
+│
+├── frontend/
+│   ├── app/
+│   ├── components/
+│   ├── lib/
+│   └── public/
+│
+├── backend/
+│   ├── app/
+│   ├── database/
+│   ├── routes/
+│   ├── storage/
+│   └── config/
+│
+└── README.md
+```
+
+---
+
+# ⚙️ Installation
+
+## 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/TalentBridge.git
+
+cd TalentBridge
+```
+
+---
+
+## 2️⃣ Backend Setup
+
 ```bash
 cd backend
+
 composer install
+
 cp .env.example .env
-# Edit .env — add DB_PASSWORD, GEMINI_API_KEY, MAIL_* settings
+
 php artisan key:generate
-php artisan migrate
-php artisan db:seed
-php artisan queue:table
-php artisan migrate
+
+php artisan migrate --seed
+
 php artisan storage:link
-php artisan serve          # Terminal 1 → http://localhost:8000
-php artisan queue:work --queue=ai   # Terminal 2
+
+php artisan serve
 ```
 
-### 3 — Frontend
+Start the queue worker in another terminal:
+
+```bash
+php artisan queue:work --queue=ai
+```
+
+---
+
+## 3️⃣ Frontend Setup
+
 ```bash
 cd frontend
+
 npm install
+
 cp .env.local.example .env.local
-# Edit .env.local → NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
-npm run dev                # Terminal 3 → http://localhost:3000
+
+npm run dev
 ```
 
 ---
 
-## Default Credentials
-| Role      | Email                       | Password       |
-|-----------|-----------------------------|----------------|
-| Admin     | admin@talentbridge.ai       | SecurePass123  |
-| Candidate | (register via /auth/register) |               |
-| Recruiter | (register via /auth/register?role=recruiter) | |
+# 🔑 Environment Variables
+
+## Backend (`backend/.env`)
+
+```env
+APP_NAME=TalentBridge
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=talentbridge
+DB_USERNAME=root
+DB_PASSWORD=
+
+GEMINI_API_KEY=
+
+MAIL_MAILER=smtp
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+```
 
 ---
 
-## Get Gemini API Key (Free)
+## Frontend (`frontend/.env.local`)
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+```
+
+---
+
+# 👥 Default Credentials
+
+| Role | Email | Password |
+|------|-------|----------|
+| **Admin** | admin@talentbridge.ai | SecurePass123 |
+| **Candidate** | Register a new account | — |
+| **Recruiter** | Register as Recruiter | — |
+
+---
+
+# 🔑 Get a Gemini API Key
+
 1. Visit https://aistudio.google.com/app/apikey
-2. Sign in with Google
-3. Click **Create API Key**
-4. Copy it into `backend/.env` → `GEMINI_API_KEY=`
+2. Sign in with your Google account.
+3. Click **Create API Key**.
+4. Copy the generated key.
+5. Add it to your backend `.env` file:
+
+```env
+GEMINI_API_KEY=YOUR_API_KEY
+```
 
 ---
 
-## Gmail SMTP Setup
-1. Enable 2FA on your Gmail account
-2. Go to Google Account → Security → App Passwords
-3. Create an App Password for "Mail"
-4. Use your Gmail address as `MAIL_USERNAME` and the app password as `MAIL_PASSWORD`
+# 📧 Gmail SMTP Setup
+
+1. Enable **2-Step Verification** on your Google account.
+2. Open **Google Account → Security → App Passwords**.
+3. Generate an App Password for **Mail**.
+4. Configure your `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
+MAIL_ENCRYPTION=tls
+```
 
 ---
 
-## Project Structure
-```
-TalentBridge/
-├── frontend/               # Next.js 14 App
-│   ├── app/
-│   │   ├── page.jsx        # Home page
-│   │   ├── auth/           # Login · Register · Admin Login
-│   │   ├── candidate/      # Dashboard · Resumes · Jobs · Interview · Cover Letters
-│   │   ├── recruiter/      # Dashboard · Jobs · Applicants
-│   │   └── admin/          # Dashboard · Users · Analytics
-│   ├── components/
-│   │   ├── layout/         # Navbar · Hero · Features · Footer
-│   │   ├── chatbot/        # BridgeAIChatbot · ChatbotPreview
-│   │   ├── resume/         # ResumeParserPreview
-│   │   └── ui/             # TBLogo · ThreeCanvas
-│   └── lib/                # api.js · auth.js
-│
-└── backend/                # Laravel 12 API
-    ├── app/
-    │   ├── Http/Controllers/
-    │   │   ├── Auth/       # AuthController · PasswordResetController
-    │   │   ├── AI/         # Chatbot · ResumeAnalysis · JobMatch · CoverLetter · InterviewPrep
-    │   │   ├── Candidate/  # Resume · JobSearch · Application · SavedJob · Interview · ResumeBuilder
-    │   │   ├── Recruiter/  # Job · Applicant
-    │   │   └── Admin/      # User · Job · Analytics
-    │   ├── Models/         # User · Job · Resume · Application · CoverLetter · etc.
-    │   ├── Services/       # GeminiService · ResumeParserService · MailService
-    │   └── Jobs/           # AnalyzeResume · GenerateInterviewQuestions · RankCandidates
-    ├── database/
-    │   ├── migrations/     # 10 clean migrations (no FK constraints)
-    │   ├── factories/      # UserFactory · JobFactory
-    │   └── seeders/        # DatabaseSeeder
-    └── routes/api.php      # All API routes
-```
+> Replace these placeholders with actual screenshots.
+
+| Home | Dashboard |
+|------|-----------|
+| ![](docs/home.png) | ![](docs/dashboard.png) |
+
+---
+
+# 🛣️ Roadmap
+
+- [x] Authentication System
+- [x] Resume Builder
+- [x] Resume Parser
+- [x] ATS Analysis
+- [x] AI Job Matching
+- [x] AI Career Chatbot
+- [x] Cover Letter Generator
+- [x] Interview Preparation
+- [x] Recruiter Dashboard
+- [ ] Real-time Chat
+- [ ] Video Interviews
+- [ ] Resume Version History
+- [ ] Multi-language Support
+
+---
+
+# 💙 Acknowledgements
+
+- Google Gemini AI
+- Laravel
+- Next.js
+- React
+- Three.js
+- Tailwind CSS
+- Framer Motion
+
+---
+
+<p align="center">
+Made with ❤️ to bridge the gap between talent and opportunity by Ayushi Chowdhury
+</p>
